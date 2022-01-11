@@ -115,9 +115,9 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     was_read = {'RUN': Running,
-                   'WLK': SportsWalking,
-                   'SWM': Swimming}
-    if workout_type in was_read :
+                'WLK': SportsWalking,
+                'SWM': Swimming}
+    if workout_type in was_read:
         return was_read[workout_type](*data)
     else:
         return'Неизвестный тип тренировки!'
