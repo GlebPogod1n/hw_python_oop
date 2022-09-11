@@ -1,5 +1,6 @@
 from dataclasses import asdict, dataclass, field
 
+
 @dataclass
 class InfoMessage:
     training_type: str
@@ -18,6 +19,7 @@ class InfoMessage:
     def get_message(self) -> str:
         return self.MESSAGE.format(**asdict(self))
 
+
 @dataclass
 class Training:
     """Базовый класс тренировки."""
@@ -27,7 +29,6 @@ class Training:
     M_IN_KM: float = field(default=1000, init=False)
     LEN_STEP: float = field(default=0.65, init=False)
     M_IN_H: float = field(default=60, init=False)
-
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -49,6 +50,7 @@ class Training:
                            self.get_mean_speed(),
                            self.get_spent_calories())
 
+
 @dataclass
 class Running(Training):
     """Тренировка: бег."""
@@ -60,6 +62,7 @@ class Running(Training):
                 - self.CALORIE_RATIO_RUN_2) * self.weight / self.M_IN_KM
                 * self.duration * self.M_IN_H)
 
+
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
@@ -67,12 +70,12 @@ class SportsWalking(Training):
     CALORIE_RATIO_WALK_1: float = 0.035
     CALORIE_RATIO_WALK_2: float = 0.029
 
-
     def get_spent_calories(self) -> float:
         return ((self.CALORIE_RATIO_WALK_1 * self.weight
                 + (self.get_mean_speed() ** 2 // self.height)
                 * self.CALORIE_RATIO_WALK_2 * self.weight)
                 * self.duration * self.M_IN_H)
+
 
 @dataclass
 class Swimming(Training):
@@ -97,7 +100,7 @@ def read_package(workout_type: str, data: list) -> Training:
     workout_types = {'RUN': Running,
                      'WLK': SportsWalking,
                      'SWM': Swimming}
-    #Тут буду рад информации как красиво проконтролировать аргументы#
+# Тут буду рад информации как красиво проконтролировать аргументы#
     if workout_type in workout_types:
         return workout_types[workout_type](*data)
     else:
